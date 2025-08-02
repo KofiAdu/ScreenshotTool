@@ -58,6 +58,7 @@ The Screenshot Tool lets you automatically capture map screenshots of vector fea
    - Metadata CSV will be saved if selected
 
 ---
+![Screenshot](Screenshot_Tool_UI.png)
 
 ## Output Example
 
