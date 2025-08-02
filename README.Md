@@ -1,4 +1,7 @@
+# [Watch a demo video](Plugin-Test.mp4)
+
 # Screenshot Tool – QGIS Plugin
+
 
 The Screenshot Tool lets you automatically capture map screenshots of vector features (points/polygons) at customizable zoom levels using any base layer. It's ideal for geospatial image datasets, country-based exports, or computer vision training data.
 
