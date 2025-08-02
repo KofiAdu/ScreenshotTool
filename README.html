@@ -1,42 +1,87 @@
-<html>
-<body>
-<h3>Plugin Builder Results</h3>
+# Screenshot Tool – QGIS Plugin
 
-Congratulations! You just built a plugin for QGIS!<br/><br />
+The Screenshot Tool lets you automatically capture map screenshots of vector features (points/polygons) at customizable zoom levels using any base layer. It's ideal for geospatial image datasets, country-based exports, or computer vision training data.
 
-<div id='help' style='font-size:.9em;'>
-Your plugin <b>ScreenshotTool</b> was created in:<br>
-&nbsp;&nbsp;<b>C:/Users/aduko/Desktop/Screenshot Tool\screenshot_tool</b>
-<p>
-Your QGIS plugin directory is located at:<br>
-&nbsp;&nbsp;<b>C:/Users/aduko/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins</b>
-<p>
-<h3>What's Next</h3>
-<ol>
-    <li>If resources.py is not present in your plugin directory, compile the resources file using pyrcc5 (simply use <b>pb_tool</b> or <b>make</b> if you have automake)
-    <li>Optionally, test the generated sources using <b>make test</b> (or run tests from your IDE)
-    <li>Copy the entire directory containing your new plugin to the QGIS plugin directory (see Notes below)
-    <li>Test the plugin by enabling it in the QGIS plugin manager
-    <li>Customize it by editing the implementation file <b>screenshot_tool.py</b>
-    <li>Create your own custom icon, replacing the default <b>icon.png</b>
-    <li>Modify your user interface by opening <b>screenshot_tool_dialog_base.ui</b> in Qt Designer
-</ol>
-Notes:
-<ul>
-    <li>You can use <b>pb_tool</b> to compile, deploy, and manage your plugin. Tweak the <i>pb_tool.cfg</i> file included with your plugin as you add files. Install <b>pb_tool</b> using 
-        <i>pip</i> or <i>easy_install</i>. See <b>http://loc8.cc/pb_tool</b> for more information.
-    <li>You can also use the <b>Makefile</b> to compile and deploy when you
-        make changes. This requires GNU make (gmake). The Makefile is ready to use, however you 
-        will have to edit it to add addional Python source files, dialogs, and translations.
-</ul>
-</div>
-<div style='font-size:.9em;'>
-<p>
-For information on writing PyQGIS code, see <b>http://loc8.cc/pyqgis_resources</b> for a list of resources.
-</p>
-</div>
-<p>
-&copy;2011-2019 GeoApt LLC - geoapt.com 
-</p>
-</body>
-</html>
+---
+
+## Features
+
+- Select **any vector layer** and **basemap layer**
+- Choose multiple **zoom levels**
+- Filter features by attributes like:
+  ```
+  country=ghana, status=active
+  ```
+- Set a **limit** on number of features to process
+- Save screenshots to a chosen folder
+- Optionally export:
+  - CSV metadata (feature ID, coordinates, attributes)
+  - Geometry in WKT format
+
+---
+
+## How to Use
+
+1. **Open the Plugin**
+   - Go to `Plugins > Screenshot Tool > Open Screenshot Tool`
+
+2. **Select Layers**
+   - *Vector Layer*: e.g. mining polygons, site points
+   - *Basemap Layer*: e.g. Google Satellite, OpenStreetMap
+
+3. **Zoom Levels**
+   - Comma-separated values in meters (buffer around each feature)
+     ```
+     50, 100, 250
+     ```
+
+4. **Filter Features (optional)**
+   - Use simple filters like:
+     ```
+     country=ghana
+     status=active
+     country=ghana, status=active
+     ```
+
+5. **Feature Limit (optional)**
+   - Choose how many features to capture. Leave at 0 to capture all.
+
+6. **Output Folder**
+   - Browse to select where screenshots and metadata will be saved
+
+7. **Export Options**
+   -  Save Metadata → saves a CSV with `feature_id, lat, lon, attributes`
+   -  Include Geometry → adds WKT geometry to metadata file
+
+8. **Click "Run Screenshots"**
+   - Screenshots will be generated and saved to your output folder
+   - Metadata CSV will be saved if selected
+
+---
+
+## Output Example
+
+```
+output_folder/
+├── feature_5_100m.png
+├── feature_5_250m.png
+├── feature_6_100m.png
+├── screenshot_metadata.csv
+```
+
+---
+
+## Notes & Tips
+
+- Ensure your vector layer has valid geometries
+- Zoom values determine image framing (in meters)
+- Works best with EPSG:4326 or project CRS-compatible layers
+- Filtering is case-insensitive and auto-trimmed
+
+---
+
+## Troubleshooting
+
+- **"0 features" message?** → Check your filter syntax or field name
+- **Basemap doesn't appear?** → Confirm it's visible and in the QGIS canvas
+- **Missing output?** → Ensure you selected an output folder and zooms
