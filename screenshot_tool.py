@@ -20,7 +20,6 @@ class ScreenshotToolPlugin:
         if not self.dialog:
             self.dialog = ScreenshotToolDialog()
 
-            # Fill layer dropdowns
             layers = list(QgsProject.instance().mapLayers().values())
             self.dialog.layerComboBox.clear()
             self.dialog.basemapComboBox.clear()
@@ -28,10 +27,7 @@ class ScreenshotToolPlugin:
                 self.dialog.layerComboBox.addItem(layer.name())
                 self.dialog.basemapComboBox.addItem(layer.name())
 
-            # Browse button
             self.dialog.browseButton.clicked.connect(self.select_output_folder)
-
-            # Run button
             self.dialog.runButton.clicked.connect(self.run_screenshot_tool)
 
         self.dialog.show()
@@ -43,7 +39,7 @@ class ScreenshotToolPlugin:
 
     def run_screenshot_tool(self):
         try:
-            # Inputs from UI
+            #inputs from UI
             vector_name = self.dialog.layerComboBox.currentText()
             basemap_name = self.dialog.basemapComboBox.currentText()
             vector_layer = QgsProject.instance().mapLayersByName(vector_name)[0]
@@ -84,7 +80,6 @@ class ScreenshotToolPlugin:
                 QMessageBox.warning(self.dialog, "Missing Info", "Zoom levels and output folder are required.")
                 return
 
-            # Call screenshot tool
             tool = ScreenshotTool()
             tool.set_parameters(
                 layer=vector_layer,
