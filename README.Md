@@ -1,4 +1,4 @@
-# [Watch a demo video](Plugin-Test.mp4)
+# [Watch/Download demo video](Plugin-Test.mp4)
 
 # Screenshot Tool – QGIS Plugin
 
