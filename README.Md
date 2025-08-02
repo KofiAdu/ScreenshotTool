@@ -20,6 +20,32 @@ The Screenshot Tool lets you automatically capture map screenshots of vector fea
 
 ---
 
+## Install
+
+### Option 1: Manual Installation
+
+Clone this repository into your QGIS plugin folder:
+
+**Windows**
+```
+C:\Users<your_username>\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\
+```
+**Linux/macOS**
+```
+~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
+```
+Then restart QGIS and enable the plugin from:  
+`Plugins > Manage and Install Plugins`
+
+---
+
+### Option 2: Plugin Manager (if published)
+
+1. Open QGIS
+2. Go to `Plugins > Manage and Install Plugins`
+3. Search for **Screenshot Tool**
+4. Click **Install**
+
 ## How to Use
 
 1. **Open the Plugin**
