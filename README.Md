@@ -53,7 +53,7 @@ The Screenshot Tool lets you automatically capture map screenshots of vector fea
    -  Save Metadata → saves a CSV with `feature_id, lat, lon, attributes`
    -  Include Geometry → adds WKT geometry to metadata file
 
-8. **Click "Run Screenshots"**
+8. **Click "Run"**
    - Screenshots will be generated and saved to your output folder
    - Metadata CSV will be saved if selected
 
