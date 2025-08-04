@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>440</height>
+    <width>525</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,12 +37,22 @@
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Zoom Levels</string>
+      <string>Buffer Distance (m)</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="zoomLineEdit"/>
+    <widget class="QLineEdit" name="bufferDistanceEdit"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Image Resolutions (Default 512x512)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="imageResolutionsEdit"/>
    </item>
    <item>
     <widget class="QLabel" name="label_4">

@@ -1,13 +1,13 @@
 # 📸 Screenshot Tool – QGIS Plugin
 
-The Screenshot Tool lets you automatically capture map screenshots of vector features (points/polygons) at customizable zoom levels using any base layer. It's ideal for geospatial image datasets, country-based exports, or computer vision training data.
+The Screenshot Tool lets you automatically capture map screenshots of vector features (points/polygons) at customizable buffer distances using any base layer. It's ideal for geospatial image datasets, country-based exports, or computer vision training data.
 
 ---
 
 ## 🛠️ Features
 
 - Select **any vector layer** and **basemap layer**
-- Choose multiple **zoom levels**
+- Choose multiple **buffer distances**
 - Filter features by attributes like:
   ```
   country=ghana, status=active
@@ -29,7 +29,7 @@ The Screenshot Tool lets you automatically capture map screenshots of vector fea
    - *Vector Layer*: e.g. mining polygons, site points
    - *Basemap Layer*: e.g. Google Satellite, OpenStreetMap
 
-3. **Zoom Levels**
+3. **Buffer Distances**
    - Comma-separated values in meters (buffer around each feature)
      ```
      50, 100, 250
@@ -74,7 +74,7 @@ output_folder/
 ## 🧪 Notes & Tips
 
 - Ensure your vector layer has valid geometries
-- Zoom values determine image framing (in meters)
+- Buffer Distances determine image framing (in meters)
 - Works best with EPSG:4326 or project CRS-compatible layers
 - Filtering is case-insensitive and auto-trimmed
 
@@ -84,4 +84,4 @@ output_folder/
 
 - **"0 features" message?** → Check your filter syntax or field name
 - **Basemap doesn't appear?** → Confirm it's visible and in the QGIS canvas
-- **Missing output?** → Ensure you selected an output folder and zooms
+- **Missing output?** → Ensure you selected an output folder and buffers

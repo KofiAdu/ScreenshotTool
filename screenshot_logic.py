@@ -14,22 +14,25 @@ from qgis.core import (
 class ScreenshotTool:
     def __init__(self):
         self.output_dir = ""
-        self.zoom_levels = []
+        self.buffer_levels = []
         self.layer = None
         self.basemap_layer = None
+        self.image_size = (512, 512)
         self.filter_expression = ""
         self.feature_limit = None
         self.save_metadata = False
         self.save_geometry = False
         self.metadata_rows = []
 
-    def set_parameters(self, layer, basemap_layer, output_dir, zoom_levels,
+    def set_parameters(self, layer, basemap_layer, output_dir, buffer_levels,
                        filter_expression="", feature_limit=None,
-                       save_metadata=False, save_geometry=False):
+                       save_metadata=False, save_geometry=False,
+                       image_size=(512, 512)):
         self.layer = layer
         self.basemap_layer = basemap_layer
         self.output_dir = output_dir
-        self.zoom_levels = zoom_levels
+        self.buffer_levels = buffer_levels
+        self.image_size = image_size
         self.filter_expression = filter_expression
         self.feature_limit = feature_limit
         self.save_metadata = save_metadata
@@ -71,9 +74,10 @@ class ScreenshotTool:
         ms.setLayers([self.basemap_layer])
         ms.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:3857"))
         ms.setExtent(rect_3857)
-        ms.setOutputSize(QSize(512, 512))
+        width, height = self.image_size
+        ms.setOutputSize(QSize(width, height))
 
-        img = QImage(512, 512, QImage.Format_ARGB32)
+        img = QImage(width, height, QImage.Format_ARGB32)
         img.fill(0)
         painter = QPainter(img)
         job = QgsMapRendererParallelJob(ms)
@@ -129,8 +133,8 @@ class ScreenshotTool:
             writer.writerows(self.metadata_rows)
 
     def capture_screenshots(self):
-        if not self.layer or not self.output_dir or not self.zoom_levels:
-            QMessageBox.warning(None, "Missing Input", "Please ensure layer, output folder, and zoom levels are set.")
+        if not self.layer or not self.output_dir or not self.buffer_levels:
+            QMessageBox.warning(None, "Missing Input", "Please ensure layer, output folder, and buffer levels are set.")
             return
 
         os.makedirs(self.output_dir, exist_ok=True)
@@ -145,7 +149,7 @@ class ScreenshotTool:
             if self.save_metadata:
                 self.extract_and_save_metadata(feature, src_crs)
 
-            for buf_m in self.zoom_levels:
+            for buf_m in self.buffer_levels:
                 rect = self.bbox_around_geom(geom, buf_m, src_crs)
                 file_path = os.path.join(self.output_dir, f"feature_{feature.id()}_{buf_m}m.png")
                 self.render_patch(rect, file_path)

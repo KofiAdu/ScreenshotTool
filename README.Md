@@ -3,14 +3,14 @@
 # Screenshot Tool – QGIS Plugin
 
 
-The Screenshot Tool lets you automatically capture map screenshots of vector features (points/polygons) at customizable zoom levels using any base layer. It's ideal for geospatial image datasets, country-based exports, or computer vision training data.
+The Screenshot Tool lets you automatically capture map screenshots of vector features (points/polygons) at customizable buffer distances using any base layer. It's ideal for geospatial image datasets, country-based exports, or computer vision training data.
 
 ---
 
 ## Features
 
 - Select **any vector layer** and **basemap layer**
-- Choose multiple **zoom levels**
+- Choose multiple **buffer distances**
 - Filter features by attributes like:
   ```
   country=ghana, status=active
@@ -20,6 +20,7 @@ The Screenshot Tool lets you automatically capture map screenshots of vector fea
 - Optionally export:
   - CSV metadata (feature ID, coordinates, attributes)
   - Geometry in WKT format
+- Set preferred **Image Resolutions**
 
 ---
 
@@ -58,13 +59,19 @@ Then restart QGIS and enable the plugin from:
    - *Vector Layer*: e.g. mining polygons, site points
    - *Basemap Layer*: e.g. Google Satellite, OpenStreetMap
 
-3. **Zoom Levels**
+3. **Buffer Distance**
    - Comma-separated values in meters (buffer around each feature)
      ```
      50, 100, 250
      ```
 
-4. **Filter Features (optional)**
+4. **Image Resolutions**
+   - Set preffered image resolutions. (512x512 by default)
+     ```
+     256x256
+     ```
+
+5. **Filter Features (optional)**
    - Use simple filters like:
      ```
      country=ghana
@@ -72,17 +79,17 @@ Then restart QGIS and enable the plugin from:
      country=ghana, status=active
      ```
 
-5. **Feature Limit (optional)**
+6. **Feature Limit (optional)**
    - Choose how many features to capture. Leave at 0 to capture all.
 
-6. **Output Folder**
+7. **Output Folder**
    - Browse to select where screenshots and metadata will be saved
 
-7. **Export Options**
+8. **Export Options**
    -  Save Metadata → saves a CSV with `feature_id, lat, lon, attributes`
    -  Include Geometry → adds WKT geometry to metadata file
 
-8. **Click "Run"**
+9. **Click "Run"**
    - Screenshots will be generated and saved to your output folder
    - Metadata CSV will be saved if selected
 
@@ -104,7 +111,7 @@ output_folder/
 ## Notes & Tips
 
 - Ensure your vector layer has valid geometries
-- Zoom values determine image framing (in meters)
+- Buffer distabces determine image framing (in meters)
 - Works best with EPSG:4326 or project CRS-compatible layers
 - Filtering is case-insensitive and auto-trimmed
 
@@ -114,4 +121,4 @@ output_folder/
 
 - **"0 features" message?** → Check your filter syntax or field name
 - **Basemap doesn't appear?** → Confirm it's visible and in the QGIS canvas
-- **Missing output?** → Ensure you selected an output folder and zooms
+- **Missing output?** → Ensure you selected an output folder and buffers

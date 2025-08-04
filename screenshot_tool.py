@@ -39,7 +39,6 @@ class ScreenshotToolPlugin:
 
     def run_screenshot_tool(self):
         try:
-            #inputs from UI
             vector_name = self.dialog.layerComboBox.currentText()
             basemap_name = self.dialog.basemapComboBox.currentText()
             vector_layer = QgsProject.instance().mapLayersByName(vector_name)[0]
@@ -49,26 +48,35 @@ class ScreenshotToolPlugin:
                 QMessageBox.critical(self.dialog, "Invalid Layer", "Please select a valid vector layer (not a raster).")
                 return
 
-            zoom_str = self.dialog.zoomLineEdit.text()
-            zooms = [int(z.strip()) for z in zoom_str.split(",") if z.strip()]
-            output = self.dialog.outputLineEdit.text()
-            #filter_expr = self.dialog.filterLineEdit.text()
-            
-            def parse_simple_filter(user_input):
-                 if not user_input:
-                     return ""
+            buffer_str = self.dialog.bufferDistanceEdit.text()
+            buffers = [int(z.strip()) for z in buffer_str.split(",") if z.strip()]
 
-                 conditions = []
-                 parts = user_input.split(",")
-                 for part in parts:
-                        if "=" not in part:
-                            continue
-                        field, value = part.split("=", 1)
-                        field = field.strip()
-                        value = value.strip().lower()
-                        conditions.append(f'lower(trim("{field}")) = \'{value}\'')
-                 return " AND ".join(conditions)
-                
+            resolution_raw = self.dialog.imageResolutionsEdit.text()
+            width, height = 512, 512 
+            if "x" in resolution_raw:
+                try:
+                    w, h = resolution_raw.lower().split("x")
+                    width, height = int(w.strip()), int(h.strip())
+                except Exception:
+                    QMessageBox.warning(self.dialog, "Invalid Input", "Resolution must be in format 512x512.")
+                    return
+
+            output = self.dialog.outputLineEdit.text()
+
+            def parse_simple_filter(user_input):
+                if not user_input:
+                    return ""
+                conditions = []
+                parts = user_input.split(",")
+                for part in parts:
+                    if "=" not in part:
+                        continue
+                    field, value = part.split("=", 1)
+                    field = field.strip()
+                    value = value.strip().lower()
+                    conditions.append(f'lower(trim("{field}")) = \'{value}\'')
+                return " AND ".join(conditions)
+
             raw_filter = self.dialog.filterLineEdit.text()
             filter_expr = parse_simple_filter(raw_filter)
 
@@ -76,8 +84,8 @@ class ScreenshotToolPlugin:
             save_meta = self.dialog.metadataCheckBox.isChecked()
             save_geom = self.dialog.geometryCheckBox.isChecked()
 
-            if not output or not zooms:
-                QMessageBox.warning(self.dialog, "Missing Info", "Zoom levels and output folder are required.")
+            if not output or not buffers:
+                QMessageBox.warning(self.dialog, "Missing Info", "Buffer distances and output folder are required.")
                 return
 
             tool = ScreenshotTool()
@@ -85,7 +93,8 @@ class ScreenshotToolPlugin:
                 layer=vector_layer,
                 basemap_layer=basemap_layer,
                 output_dir=output,
-                zoom_levels=zooms,
+                buffer_levels=buffers,
+                image_size=(width, height),
                 filter_expression=filter_expr,
                 feature_limit=limit if limit > 0 else None,
                 save_metadata=save_meta,
@@ -95,3 +104,4 @@ class ScreenshotToolPlugin:
 
         except Exception as e:
             QMessageBox.critical(self.dialog, "Error", str(e))
+
