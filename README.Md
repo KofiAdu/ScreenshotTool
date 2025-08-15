@@ -1,5 +1,3 @@
-# [Watch/Download demo video](Plugin-Test-2.mp4)
-
 # Screenshot Tool – QGIS Plugin
 
 
