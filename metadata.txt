@@ -12,8 +12,8 @@ email=adukofi73@yahoo.com
 
 about=ScreenshotTool is a QGIS plugin that allows users to automatically generate map screenshots of geospatial features. Users can select a vector layer, specify buffer distances, apply attribute filters, and choose a basemap. The plugin captures high-resolution screenshots around selected features—ideal for building computer vision datasets, reports, or map visualizations.
 
-tracker=http://bugs
-repository=http://repo
+tracker=https://github.com/KofiAdu/ScreenshotTool/issues
+repository=https://github.com/KofiAdu/ScreenshotTool
 # End of mandatory metadata
 
 # Recommended items:
